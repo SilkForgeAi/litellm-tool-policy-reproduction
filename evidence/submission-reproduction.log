@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.15, pytest-9.0.3, pluggy-1.6.0 -- <venv>/bin/python
+cachedir: .pytest_cache
+rootdir: <workspace>/litellm
+configfile: pyproject.toml
+plugins: xdist-3.8.0, timeout-2.4.0, anyio-4.14.2, asyncio-1.3.0, forked-1.6.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 5 items
+
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_blocks_trusted_tool_after_untrusted_tool_output PASSED [ 20%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_allows_trusted_tool_after_trusted_tool_output PASSED [ 40%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_request_stage_blocks_route_extracted_tool_when_function_tools_empty PASSED [ 60%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call FAILED [ 80%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool FAILED [100%]
+
+=================================== FAILURES ===================================
+______ test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call ______
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:232: in test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call
+    with pytest.raises(HTTPException) as exc_info:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'fastapi.exceptions.HTTPException'>
+_ test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool _
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:268: in test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool
+    with pytest.raises(HTTPException) as exc_info:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'fastapi.exceptions.HTTPException'>
+=============================== warnings summary ===============================
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_blocks_trusted_tool_after_untrusted_tool_output
+  <venv>/lib/python3.13/site-packages/pydantic/_internal/_generate_schema.py:1480: UserWarning: Item 'call_count' on TypedDict class 'ToolDiscoveryQueueItem' is using the `ReadOnly` qualifier. Pydantic will not protect items from any mutation on dictionary instances.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call
+FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool
+==================== 2 failed, 3 passed, 1 warning in 2.67s ====================
