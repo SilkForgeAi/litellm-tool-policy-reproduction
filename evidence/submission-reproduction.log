@@ -5,22 +5,28 @@ rootdir: <workspace>/litellm
 configfile: pyproject.toml
 plugins: xdist-3.8.0, timeout-2.4.0, anyio-4.14.2, asyncio-1.3.0, forked-1.6.0, cov-7.0.0
 asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
-collecting ... collected 5 items
+collecting ... collected 6 items
 
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_blocks_trusted_tool_after_untrusted_tool_output PASSED [ 20%]
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_allows_trusted_tool_after_trusted_tool_output PASSED [ 40%]
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_request_stage_blocks_route_extracted_tool_when_function_tools_empty PASSED [ 60%]
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call FAILED [ 80%]
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool FAILED [100%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_blocks_trusted_tool_after_untrusted_tool_output PASSED [ 16%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_openai_format_allows_trusted_tool_after_trusted_tool_output PASSED [ 33%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_control_anthropic_handler_blocks_solo_provider_native_bash_tool PASSED [ 50%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_handler_output_response_blocks_trusted_tool_after_untrusted_tool_result FAILED [ 66%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_responses_handler_output_response_blocks_trusted_tool_after_untrusted_output FAILED [ 83%]
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_handler_blocks_provider_native_bash_tool_when_mixed_with_custom_tool FAILED [100%]
 
 =================================== FAILURES ===================================
-______ test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call ______
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:232: in test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call
+_ test_repro_anthropic_handler_output_response_blocks_trusted_tool_after_untrusted_tool_result _
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:249: in test_repro_anthropic_handler_output_response_blocks_trusted_tool_after_untrusted_tool_result
     with pytest.raises(HTTPException) as exc_info:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E   Failed: DID NOT RAISE <class 'fastapi.exceptions.HTTPException'>
-_ test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool _
-tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:268: in test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool
+_ test_repro_responses_handler_output_response_blocks_trusted_tool_after_untrusted_output _
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:306: in test_repro_responses_handler_output_response_blocks_trusted_tool_after_untrusted_output
+    with pytest.raises(HTTPException) as exc_info:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE <class 'fastapi.exceptions.HTTPException'>
+_ test_repro_anthropic_handler_blocks_provider_native_bash_tool_when_mixed_with_custom_tool _
+tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py:345: in test_repro_anthropic_handler_blocks_provider_native_bash_tool_when_mixed_with_custom_tool
     with pytest.raises(HTTPException) as exc_info:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E   Failed: DID NOT RAISE <class 'fastapi.exceptions.HTTPException'>
@@ -31,6 +37,7 @@ tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::te
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ============================
-FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_messages_tool_result_blocks_trusted_tool_call
-FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_request_stage_blocks_route_tool_when_mixed_with_openai_function_tool
-==================== 2 failed, 3 passed, 1 warning in 2.67s ====================
+FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_handler_output_response_blocks_trusted_tool_after_untrusted_tool_result
+FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_responses_handler_output_response_blocks_trusted_tool_after_untrusted_output
+FAILED tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction.py::test_repro_anthropic_handler_blocks_provider_native_bash_tool_when_mixed_with_custom_tool
+==================== 3 failed, 3 passed, 1 warning in 1.92s ====================
