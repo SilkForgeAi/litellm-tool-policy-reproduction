@@ -70,6 +70,13 @@ pytest tests/unit/proxy/guardrails/guardrail_hooks/test_tool_policy_reproduction
 | `test_repro_responses_handler_output_response_blocks_trusted_tool_after_untrusted_output` | `OpenAIResponsesHandler.process_output_response` on `/v1/responses` after `function_call_output` from `read_external_note` (`untrusted`) -> `send_summary` (`trusted`) | Raises `HTTPException(400)` | Allowed (no exception) | **FAIL (repro)** |
 | `test_repro_anthropic_handler_blocks_provider_native_bash_tool_when_mixed_with_custom_tool` | `AnthropicMessagesHandler.process_input_messages` on `/v1/messages` with `ping` (`untrusted`) + `{"type": "bash_20250124", "name": "bash"}` (`blocked`) | Raises `HTTPException(400)` | Allowed (no exception) | **FAIL (repro)** |
 
+## Upstream Status (checked 2026-11-19)
+
+Source reading only; the tests were not re-run against `main`.
+
+- **Stage 1 (mixed provider-native tool):** on `main` at `e784165e9150057e0f2abea166137b1c2fdcc069`, `ToolPolicyGuardrail.apply_guardrail()` merges `function_tool_names` with `extract_request_tool_names(route, request_data)` instead of choosing one, which appears to address the mixed `bash_20250124` + custom tool case.
+- **Stage 2 (trust chain):** on the same `main` commit, Stage 2 still reads only `role == "tool"` messages and `tool_calls` on `role == "assistant"` messages.
+
 ## Sanitization Note
 
 Machine-specific local checkout paths in `evidence/*.log` were replaced with `<workspace>/litellm` and `<venv>`. No assertions, stack frames, or test outcomes were modified.
@@ -77,5 +84,7 @@ Machine-specific local checkout paths in `evidence/*.log` were replaced with `<w
 ## Scope
 
 This repository contains reproduction tests and execution logs only. No production fix is included.
+
+Upstream license and attribution: see [NOTICE](NOTICE).
 
 Prepared with AI assistance. The reported tests were executed locally against commit `e63fc85b7b6db8ea1bc0f444f3b997de71898b66`.
